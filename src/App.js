@@ -28,10 +28,19 @@ const finalSpaceCharacters = [
     name: 'Quinn Ergon',
     thumb: '/images/quinn.png'
   }
-]
+];
 
 function App() {
   const [characters, updateCharacters] = useState(finalSpaceCharacters);
+  const [expandedCharacter, setExpandedCharacter] = useState(null);
+
+  const toggleExpansion = (id) => {
+    if (expandedCharacter === id) {
+      setExpandedCharacter(null);
+    } else {
+      setExpandedCharacter(id);
+    }
+  };
 
   function handleOnDragEnd(result) {
     if (!result.destination) return;
@@ -50,25 +59,50 @@ function App() {
         <DragDropContext onDragEnd={handleOnDragEnd}>
           <Droppable droppableId="characters">
             {(provided) => (
-              <ul className="characters" {...provided.droppableProps} ref={provided.innerRef}>
-                {characters.map(({id, name, thumb}, index) => {
-                  return (
-                    <Draggable key={id} draggableId={id} index={index}>
-                      {(provided) => (
-                        <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                          <div className="characters-thumb">
-                            <img src={thumb} alt={`${name} Thumb`} />
+              <div className="characters-container">
+                <ul className="characters" {...provided.droppableProps} ref={provided.innerRef}>
+                  {characters.map(({ id, name, thumb, expanded }, index) => {
+                    return (
+                      <Draggable key={id} draggableId={id} index={index}>
+                        {(provided) => (
+                          <li
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                          >
+                            <div className="characters-thumb">
+                              <img src={thumb} alt={`${name} Thumb`} />
+                            </div>
+                            <p>{name}</p>
+                            <button onClick={() => toggleExpansion(id)}>
+                              {expanded ? 'Collapse' : 'Expand'}
+                            </button>
+                          </li>
+                        )}
+                      </Draggable>
+                    );
+                  })}
+                  {provided.placeholder}
+                </ul>
+                {expandedCharacter && (
+                  <div className="character-card">
+                    {characters.map(({ id, name, thumb }) => {
+                      if (id === expandedCharacter) {
+                        return (
+                          <div key={id}>
+                            <div className="characters-thumb">
+                              <img src={thumb} alt={`${name} Thumb`} />
+                            </div>
+                            <p>{name}</p>
+                            {/* Render additional information here */}
                           </div>
-                          <p>
-                            { name }
-                          </p>
-                        </li>
-                      )}
-                    </Draggable>
-                  );
-                })}
-                {provided.placeholder}
-              </ul>
+                        );
+                      }
+                      return null;
+                    })}
+                  </div>
+                )}
+              </div>
             )}
           </Droppable>
         </DragDropContext>
