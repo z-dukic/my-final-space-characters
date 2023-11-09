@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  display: flex;
 }
 
 .App-header {
@@ -57,4 +58,102 @@
   display: block;
   width: 100%;
   height: auto;
+}
+
+/* App.css or your custom CSS file */
+/* App.css or your custom CSS file */
+.character-card {
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  margin: 10px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background-color 0.3s;
+}
+
+.character-card img {
+  max-width: 100px;
+  border-radius: 4px;
+}
+
+.character-card p {
+  margin: 0;
+}
+
+.expanded-card {
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  padding: 10px;
+  display: flex; /* Display the expanded card in a row */
+  align-items: center;
+  justify-content: space-between; /* Space content evenly horizontally */
+  transition: background-color 0.3s;
+  flex: 1; /* Allow it to take up the remaining space on the right */
+  margin-left: 20px; /* Add margin to the left to separate it from character cards */
+}
+
+/* CSS */
+.button-6 {
+  align-items: center;
+  background-color: #FAFBFC;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: .25rem;
+  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+  box-sizing: border-box;
+  color: rgba(0, 0, 0, 0.85);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  justify-content: center;
+  line-height: 1.25;
+  margin: 1rem;
+  min-height: 3rem;
+  padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+  position: relative;
+  text-decoration: none;
+  transition: all 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  width: auto;
+}
+
+.button-6:hover,
+.button-6:focus {
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.button-6:hover {
+  transform: translateY(-1px);
+}
+
+.button-6:active {
+  background-color: #F0F0F1;
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+  color: rgba(0, 0, 0, 0.65);
+  transform: translateY(0);
+}
+
+.container {
+  display: flex;
+}
+
+.left {
+  width: 75%;
+  /*background-color: #f2f2f2; */
+}
+
+.right {
+  width: 25%;
+  /* background-color: #e6e6e6; */
 }

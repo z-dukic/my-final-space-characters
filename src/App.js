@@ -6,27 +6,12 @@ const finalSpaceCharacters = [
   {
     id: 'gary',
     name: 'Gary Goodspeed',
-    thumb: '/images/gary.png'
+    thumb: '/images/gary.png',
   },
   {
     id: 'cato',
     name: 'Little Cato',
-    thumb: '/images/cato.png'
-  },
-  {
-    id: 'kvn',
-    name: 'KVN',
-    thumb: '/images/kvn.png'
-  },
-  {
-    id: 'mooncake',
-    name: 'Mooncake',
-    thumb: '/images/mooncake.png'
-  },
-  {
-    id: 'quinn',
-    name: 'Quinn Ergon',
-    thumb: '/images/quinn.png'
+    thumb: '/images/cato.png',
   }
 ];
 
@@ -52,64 +37,82 @@ function App() {
     updateCharacters(items);
   }
 
+  function handleAddConnectorClick() {
+    // Create a new character object with a unique ID (you can use a library like uuid to generate a unique ID)
+    const newCharacter = {
+      id: `new-${Date.now()}`, // Unique ID based on the current timestamp
+      name: 'New Connector', // Name of the new connector
+      thumb: '/images/default.png', // Default image path (replace with your desired image)
+    };
+
+    // Update the characters array by appending the new character
+    updateCharacters([...characters, newCharacter]);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Final Space Characters</h1>
-        <DragDropContext onDragEnd={handleOnDragEnd}>
-          <Droppable droppableId="characters">
-            {(provided) => (
-              <div className="characters-container">
-                <ul className="characters" {...provided.droppableProps} ref={provided.innerRef}>
-                  {characters.map(({ id, name, thumb, expanded }, index) => {
-                    return (
-                      <Draggable key={id} draggableId={id} index={index}>
-                        {(provided) => (
-                          <li
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                          >
-                            <div className="characters-thumb">
-                              <img src={thumb} alt={`${name} Thumb`} />
-                            </div>
-                            <p>{name}</p>
-                            <button onClick={() => toggleExpansion(id)}>
-                              {expanded ? 'Collapse' : 'Expand'}
-                            </button>
-                          </li>
-                        )}
-                      </Draggable>
-                    );
-                  })}
-                  {provided.placeholder}
-                </ul>
-                {expandedCharacter && (
-                  <div className="character-card">
-                    {characters.map(({ id, name, thumb }) => {
-                      if (id === expandedCharacter) {
-                        return (
-                          <div key={id}>
-                            <div className="characters-thumb">
-                              <img src={thumb} alt={`${name} Thumb`} />
-                            </div>
-                            <p>{name}</p>
-                            {/* Render additional information here */}
-                          </div>
-                        );
-                      }
-                      return null;
+      <div class="container"></div>
+      <div class="left">
+        <header className="App-header">
+          <h1>Final Space Characters</h1>
+          <DragDropContext onDragEnd={handleOnDragEnd}>
+            <Droppable droppableId="characters">
+              {(provided) => (
+                <div className="characters-container">
+                  <ul className="characters" {...provided.droppableProps} ref={provided.innerRef}>
+                    {characters.map(({ id, name, thumb, expanded }, index) => {
+                      return (
+                        <Draggable key={id} draggableId={id} index={index}>
+                          {(provided) => (
+                            <li
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                            >
+                              <div className="characters-thumb">
+                                <img src={thumb} alt={`${name} Thumb`} />
+                              </div>
+                              <p>{name}</p>
+                              <button class="button-6" role="button" onClick={() => toggleExpansion(id)}>
+                                {expanded ? 'Collapse' : 'Expand'}
+                              </button>
+                            </li>
+                          )}
+                        </Draggable>
+                      );
                     })}
+                    {provided.placeholder}
+                  </ul>
+
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
+          <div>
+            <button class="button-6" role="button" onClick={handleAddConnectorClick}>Add a new connector</button>
+          </div>
+        </header>
+      </div>
+      <div class="right">
+        {expandedCharacter && (
+          <div className="expanded-card">
+            {characters.map(({ id, name, thumb }) => {
+              if (id === expandedCharacter) {
+                return (
+                  <div key={id}>
+                    <div className="characters-thumb">
+                      <img src={thumb} alt={`${name} Thumb`} />
+                    </div>
+                    <p>{name}</p>
+                    {/* Render additional information here */}
                   </div>
-                )}
-              </div>
-            )}
-          </Droppable>
-        </DragDropContext>
-      </header>
-      <p>
-        Images from <a href="https://final-space.fandom.com/wiki/Final_Space_Wiki">Final Space Wiki</a>
-      </p>
+                );
+              }
+              return null;
+            })}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
